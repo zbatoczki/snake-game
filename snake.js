@@ -1,8 +1,10 @@
 var GRID_SIZE = 40;
 
 var snake = {
+	size: 3,
 	position: [[20,20], [20,19], [20,18]],
-	direction: 'r'
+	direction: '',
+	alive: true
 };
 
 function render(){
@@ -16,7 +18,7 @@ function render(){
 }
 
 function getDirectionKey(){
-	$(document).keypress(function(key){
+	$(document).keydown(function(key){
 		switch(key.which)
 		{
 			case 37: //left
@@ -41,5 +43,40 @@ function getDirectionKey(){
 	});
 }
 
+function moveSnake(){
+
+	switch(snake.direction){
+		case 'u':
+			snake.position[0][0] -= 1;
+			break;
+		case 'd':
+			snake.position[0][0] += 1;
+			break;
+		case 'l':
+			snake.position[0][1] -= 1;
+			break;
+		case 'r':
+			snake.position[0][1] += 1;
+			break;
+	}
+	console.log("X: "+snake.position[0][0] + " | Y: " + snake.position[0][1]);
+	$(".row:nth-child(" + snake.position[0][0] + ") > .box:nth-child(" + snake.position[0][1] + ")").addClass("snake-pixel");
+	console.log("X: "+((snake.position[0][0])-1) + " | Y: " + ((snake.position[0][1])-1));
+	$(".row:nth-child(" + ((snake.position[0][0])-1) + ") > .box:nth-child(" + ((snake.position[0][1])-1) + ")").removeClass("snake-pixel");
+
+	// for (var i = 0; i < snake.size; i++) {
+ //      $(".row:nth-child(" + snake.position[i][0] + ") > .box:nth-child(" + snake.position[i][1] + ")").addClass("snake-pixel");
+ //    }
+}
+
+function gameLoop(){
+		setTimeout(function(){
+		getDirectionKey();
+		moveSnake();
+		if (snake.alive) { gameLoop(); }
+	}, 1000);
+
+}
+
 render();
-getDirectionKey();
+gameLoop();
