@@ -6,6 +6,7 @@ var direction = 'd';
 var food = "";
 
 var speed = 200;
+var score = 0;
 
 function popTail(){
 	var tail = snake.pop();
@@ -42,6 +43,8 @@ function moveHead(tail){
 		snake.push(tail);
 		$("#p_"+tail).addClass("snake-pixel");
 		$("#p_"+food).removeClass("food");
+		score++;
+		$("#score").html(score);
 		generateFood();
 		if(speed > 75)
 			speed -= 15;
@@ -94,8 +97,10 @@ function initialize(){
 	snake = ["3_10","2_10","1_10"];
 	direction = 'd';
 	speed = 200;
+	score = 0;
 	food = "";
 	$("#board").html("");
+	$("#score").html(score);
 	render();
 	setTimeout(function(){ gameUpdate() }, speed);
 }

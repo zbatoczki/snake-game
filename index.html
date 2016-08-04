@@ -6,22 +6,26 @@
 	<style type="text/css">
 		* { box-sizing: border-box }
 		#board{
-			width:640px;
-			height: 640px;
-			margin: auto
+			width:650px;
+			height: 650px;
+			margin: auto;
+			border: solid black 5px;
+			border-radius: 10px;
 		}
 		#board .pixel{
 			float: left;
 			width: 16px;
 			height: 16px;
-			border: 1px solid black;
+			/*border: 1px solid black;*/
 		}
 		.snake-pixel{background-color: black}
 		.food{background-color: red}
 	</style>
 </head>
 <body>
+<h1 style="text-align:center">SNAKE</h1>
 <div id="board"></div>
+<p style="text-align:center">SCORE: <span id="score"></span></p>
 <script type="text/javascript" src="snake.js"></script>
 </body>
 </html>
