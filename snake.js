@@ -1,11 +1,11 @@
 var GRID_SIZE = 40;
 
 var snake = ["3_10","2_10","1_10"];
-var direction = '';
+var direction = 'd';
 
 var food = "";
 
-var speed = 30;
+var speed = 200;
 
 function popTail(){
 	var tail = snake.pop();
@@ -43,17 +43,20 @@ function moveHead(tail){
 		$("#p_"+tail).addClass("snake-pixel");
 		$("#p_"+food).removeClass("food");
 		generateFood();
+		if(speed > 75)
+			speed -= 15;
+		else
+			speed = 75;
 	}
 
 	snake.unshift(newPosition);
-
-  // $('#p_'+newPosition).hasClass('snake-pixel'); 
-  // //condition to exist the Game !
-  // if (column<0 || row<0 || column>19 || row>19 ||  $('#p_'+newPosition).hasClass('snake-pixel') ){
-  //   alert('You lost !');    
-  //   initialize();
-  //   return;
-  // } 
+	$('#p_'+newPosition).hasClass('snake-pixel'); 
+   //condition to exist the Game !
+  if (column<0 || row<0 || column>39 || row>39 ||  $('#p_'+newPosition).hasClass('snake-pixel') ){
+    alert('You lost !');    
+    initialize();
+    return;
+  } 
 	$("#p_"+newPosition).addClass("snake-pixel");
 
 	setTimeout(function(){ gameUpdate() }, speed);	
@@ -74,10 +77,6 @@ function render(){
 	generateFood();
 }
 
-function getDirectionKey(){
-	
-}
-
 function generateFood(){
 	var row = Math.floor(Math.random() * 40);
 	var column = Math.floor(Math.random() * 40);
@@ -92,11 +91,11 @@ function gameUpdate(){
 }
 
 function initialize(){
-
 	snake = ["3_10","2_10","1_10"];
-	direction = '';
+	direction = 'd';
+	speed = 200;
 	food = "";
-
+	$("#board").html("");
 	render();
 	setTimeout(function(){ gameUpdate() }, speed);
 }
@@ -107,19 +106,19 @@ $(document).ready(function(){
 		{
 			case 37: //left
 				console.log("Keyboard input detected: LEFT");
-				direction = 'l';
+				if(direction != 'r') direction = 'l';
 				break;
 			case 38: //up
 				console.log("Keyboard input detected: UP");
-				direction = 'u';
+				if(direction != 'd') direction = 'u';
 				break;
 			case 39: //right
 				console.log("Keyboard input detected: RIGHT");
-				direction = 'r';
+				if(direction != 'l') direction = 'r';
 				break;
 			case 40: //down
 				console.log("Keyboard input detected: DOWN");
-				direction = 'd';
+				if(direction != 'u') direction = 'd';
 				break;
 			default: return;
 		}
